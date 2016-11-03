@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
+    <dict>
+        <!-- IMPORTANT NOTE. IF THERE ARE MULTIPLE VALUES FOR A KEY, THEN EACH VALUE SHOULD BE SEPARATED BY A COMMA IN ONE STRING  -->
+        <!-- EXCEPT IF THE KEY HAS <array></array> CODE WITHIN IT.  THEN EACH VALUE FOR THAT KEY MUST BE ENTERED AS A SEPARATE STRING WITHIN THAT ARRAY -->
         <key>CFBundleIdentifier</key>
-            <string>com.plexapp.plugins.plexrequestschannel</string>
-        <key>PlexFrameworkVersion</key>       
-            <string>2</string>
+                <!-- Unique PMS identifier for the plugin and its logs.  Format should always be com.plexapp.plugins.<nameofyourplugin> with no capital letters, spaces, or special characters -->    
+                <string>com.plexapp.plugins.plexrequestschannel</string>
+            <key>PlexFrameworkVersion</key>
+                <!-- Version should always be set to 2 -->
+                <string>2</string>
+
+        <!-- Below are the way in which to include or exclude clients or servers from a channel -->
+        <!-- Not necessary in initial design. If submitted to the channel store, any values will be added in the code review stage prior to release -->
+        <!-- Since you want to create plugins that work on most clients and servers, most often you will set it to * and use the exclusion for any that have issues -->
+        <!-- Possible values are * for all platforms, MacOSX, Windows, Linux, Roku, Android, iOS, Safari, Firefox, Chrome, LGTV, Samsung, PlexConnect and Plex Home Theater -->
         <key>PlexClientPlatforms</key>
+            <!-- List any client platforms supported in the plugin. -->
             <string>*</string>
 			
         <!-- DEBUG OPTIONAL KEYS -->
         <key>PlexPluginDebug</key>
-        <array>
+            <array>
                 <!-- possible values are 0 and 1 -->
                 <!-- Setting it to "1" rather than "0" turns on debug logging -->
                 <string>1</string>
-        </array>
-        <key>PlexPluginTesterFlags</key>
-            <array>
-                <!-- possible values are NoURLServices -->    
-                <!--  Makes the Automated Tester more accurate and won't raise an error that Channel X has no associated URL Service because it actually uses URL Service Y -->
-                <string>NoURLServices</string>
             </array>
+
+        <key>PlexPluginTesterFlags</key>
+        <array>
+            <!-- possible values are NoURLServices -->
+            <!--  Nakes the Automated Tester more accurate and won't raise an error that Channel X has no associated URL Service because it actually uses URL Service Y -->
+            <string>NoURLServices</string>
+        </array>
         <key>PlexPluginCodePolicy</key>
-            <!-- this allows channels to access some python methods which are otherwise blocked, as well as import external code libraries, and interact with the PMS HTTP API -->    
+            <!-- this allows channels to access some python methods which are otherwise blocked, as well as import external code libraries, and interact with the PMS HTTP API -->
             <string>Elevated</string>
+
         <key>PlexPluginMode</key>
-            <!-- This one does nothing with a value of Always On, but using a value of "daemon" keeps the plugin alive in the background -->    
-            <string>AlwaysOn</string>            
-        </dict>
+        <!-- This one does nothing with a value of Always On, but using a value of "daemon" keeps the plugin alive in the background -->
+        <string>AlwaysOn</string>
+    </dict>
 </plist>

@@ -1,4 +1,4 @@
-# DumbTools for Plex v1.1 by Cory <babylonstudio@gmail.com>
+# DumbTools for Plex v1.1 by Dave Spriet <davespriet@gmail.com>
 # Slightly modified by ngovil21 for Plex Request Channel
 
 import urllib2
