@@ -5,6 +5,12 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PlexRequestChannel.bundle", "PlexRequestChannel.bundle.pyproj", "{B1053E19-8C40-46E2-9F13-FE057EE6CB78}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logs", "Logs", "{BFDC4CBC-7E62-44DE-A908-00EC32FBA621}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Logs\PMS Plugin Logs\com.plexapp.plugins.plexrequestschannel.log = ..\..\Logs\PMS Plugin Logs\com.plexapp.plugins.plexrequestschannel.log
+		..\..\Logs\Plex Media Server.log = ..\..\Logs\Plex Media Server.log
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

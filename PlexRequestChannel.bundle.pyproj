@@ -5,14 +5,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{b1053e19-8c40-46e2-9f13-fe057ee6cb78}</ProjectGuid>
     <ProjectHome />
-    <StartupFile />
-    <SearchPath />
+    <StartupFile>./Contents/Tests/ChannelTests.py</StartupFile>
+    <SearchPath>..\..\..\..\..\..\..\tmp\python27\;..\..\..\..\..\..\..\Program Files (x86)\Plex\Plex Media Server\DLLs\;..\..\..\..\..\..\..\Program Files (x86)\Plex\Plex Media Server\Exts\;..\..\..\..\..\..\..\tmp\Framework.bundle\Contents\Resources\Platforms\Shared\Libraries\;..\..\..\..\..\..\..\tmp\Framework.bundle\Contents\Resources\Versions\2\Python\;..\..\..\..\..\..\..\tmp\Framework.bundle\Contents\Resources\Versions\1\Python\;..\..\..\..\..\..\..\tmp\Framework.bundle\Contents\Resources\Versions\0\Python\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId />
-    <InterpreterVersion />
+    <InterpreterId>{1b43fbc0-d88a-4bd0-ac98-601a8dd9ef7e}</InterpreterId>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -47,6 +48,15 @@
     <Folder Include="Contents\" />
     <Folder Include="Contents\Code" />
     <Folder Include="Contents\Resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{1b43fbc0-d88a-4bd0-ac98-601a8dd9ef7e}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="..\..\..\..\..\..\..\Program Files %28x86%29\Plex\Plex Media Server\DLLs\_ctypes.pyd">
+      <Name>_ctypes.pyd</Name>
+      <PythonExtension>..\..\..\..\..\..\..\Program Files (x86)\Plex\Plex Media Server\DLLs\_ctypes.pyd</PythonExtension>
+    </Reference>
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
