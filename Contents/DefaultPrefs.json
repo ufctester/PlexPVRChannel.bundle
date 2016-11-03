@@ -1,0 +1,319 @@
+[
+  {
+    "id": "movie_db",
+    "label": "Movie Database  ",
+    "type": "enum",
+    "values": ["OpenMovieDatabase", "TheMovieDatabase"],
+    "default": "OpenMovieDatabase"
+  },
+  {
+    "id": "search_language",
+    "label": "Search Language (titles and descriptions will be returned from database)",
+    "type": "enum",
+    "values": [
+      "English",
+      "Espanol",
+      "Francais",
+      "Deutsch",
+      "Italiano",
+      "Chinese",
+      "Nederlands",
+      "Svenska",
+      "Norsk",
+      "Dansk",
+      "Suomeksi",
+      "Polski",
+      "Magyar",
+      "Greek",
+      "Turkish",
+      "Russian",
+      "Hebrew",
+      "Japanese",
+      "Portuguese",
+      "Czech",
+      "Slovenian",
+      "Croatian",
+      "Korean"
+    ],
+    "default": "English"
+  },
+  {
+    "id": "movierequests",
+    "label": "Allow users to see requests Movies?",
+    "type": "bool",
+    "default": true
+  },
+  {
+    "id": "tvrequests",
+    "label": "Allow users to request TV Shows?",
+    "type": "bool",
+    "default": true
+  },
+  {
+    "id": "musicrequests",
+    "label": "Allow users to request Music Albums?",
+    "type": "bool",
+    "default": true
+  },
+  {
+    "id": "usersviewrequests",
+    "label": "Allow users to see requests page?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "plextv",
+    "label": "Authenticate admin user through Plex.tv (Disable if you would like to check locally [Plex Home only])",
+    "type": "bool",
+    "default": true
+  },
+  {
+    "id": "password",
+    "label": "View Requests Password",
+    "type": "text",
+    "option": "hidden",
+    "default": "",
+    "secure": true
+  },
+  {
+    "id": "register",
+    "label": "Register User Clients?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "weekly_limit",
+    "label": "Weekly Request Limit (unlimited by default)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "couchpotato_url",
+    "label": "CouchPotato URL",
+    "type": "text",
+    "default": "http://127.0.0.1:5050/"
+  },
+  {
+    "id": "couchpotato_api",
+    "label": "CouchPotato API Key",
+    "type": "text",
+    "default": "",
+    "secure": true
+  },
+  {
+    "id": "couchpotato_autorequest",
+    "label": "Automatically add request to CouchPotato?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "couchpotato_profile",
+    "label": "CouchPotato Profile Name (optional)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "couchpotato_category",
+    "label": "CouchPotato Category Name (optional)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sonarr_url",
+    "label": "Sonarr URL",
+    "type": "text",
+    "default": "http://127.0.0.1:8989/"
+  },
+  {
+    "id": "sonarr_api",
+    "label": "Sonarr API Key",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sonarr_autorequest",
+    "label": "Automatically add request to Sonarr?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "sonarr_profile",
+    "label": "Sonarr Quality Profile",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sonarr_path",
+    "label": "Root folder for Show to be placed in (optional)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sonarr_seasonfolder",
+    "label": "Create season folders?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "sonarr_monitor",
+    "label": "Monitor Seasons (manual will allow selecting of seasons/episodes after adding)",
+    "type": "enum",
+    "values": ["manual","all", "future", "latest", "first", "missing", "existing", "none"],
+    "default": "none"
+  },
+  {
+    "id": "sickbeard_fork",
+    "label": "Sickbeard/Sickrage",
+    "type": "enum",
+    "values": ["Sickbeard", "SickRage"],
+    "default": "Sickbeard"
+  },
+  {
+    "id": "sickbeard_url",
+    "label": "Sickbeard URL",
+    "type": "text",
+    "default": "http://127.0.0.1:8081/"
+  },
+  {
+    "id": "sickbeard_api",
+    "label": "Sickbeard Api Key",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sickbeard_autorequest",
+    "label": "Automatically add request to Sickbeard?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "sickbeard_language",
+    "label": "Sickbeard Language (required if using SickRage)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sickbeard_location",
+    "label": "Sickbeard Download Location (optional)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sickbeard_status",
+    "label": "Sickbeard Initial Status of episodes (manual will allow selecting of seasons/episodes after adding)",
+    "type": "enum",
+    "values": ["manual","wanted","skipped","archived","ignored"],
+    "default": "wanted"
+  },
+  {
+    "id": "sickbeard_initial",
+    "label": "Sickbeard Initial Qualities, separated with | (optional)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "sickbeard_archive",
+    "label": "Sickbeard Archive Qualities separated with | (optional)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "headphones_url",
+    "label": "Headphones URL",
+    "type": "text",
+    "default": "http://127.0.0.1:8181/"
+  },
+  {
+    "id": "headphones_api",
+    "label": "Headphones Api Key",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "headphones_autorequest",
+    "label": "Automatically add request to Headphones?",
+    "type": "bool",
+    "default": false
+  },
+  {
+    "id": "pushbullet_api",
+    "label": "Pushbullet API",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "pushbullet_devices",
+    "label": "Pushbullet Device IDs",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "pushbullet_channel",
+    "label": "Pushbullet Channel (optional) (Don't use #)",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "pushover_api",
+    "label": "Pushover API Key",
+    "type": "text",
+    "default": "ajMtuYCg8KmRQCNZK2ggqaqiBw2UHi"
+  },
+  {
+    "id": "pushover_user",
+    "label": "Pushover User Key",
+    "type": "text",
+    "default": ""
+  },  
+  {
+    "id": "pushalot_api",
+    "label": "Pushalot API Key",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "email_from",
+    "label": "Email to send from",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "email_to",
+    "label": "Email to send to",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "email_server",
+    "label": "SMTP Server",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "email_port",
+    "label": "SMTP Server Port",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "email_secure",
+    "label": "Use TLS",
+    "type": "bool",
+    "default": "false"
+  },
+  {
+    "id": "email_username",
+    "label": "SMTP Username",
+    "type": "text",
+    "default": ""
+  },
+  {
+    "id": "email_password",
+    "label": "SMTP Server Password",
+    "type": "text",
+    "default": "",
+    "option": "hidden",
+    "secure": true
+  }
+
+]
