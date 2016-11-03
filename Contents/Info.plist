@@ -38,7 +38,7 @@
         <!-- But for example, Webkit channels are only supported by MacOSX-i386 -->
         <!-- Server values are * for all platforms, MacOSX-i386 -->
         <key>PlexServerPlatforms</key>
-            <string></string>
+            <string>*</string>
         
         <key>PlexServerPlatformsExclusions</key>
             <!-- List any server platforms not supported in the plugin. -->
@@ -46,7 +46,7 @@
         
         <key>PlexMinimumServerVersion</key>
             <!-- Value is minimum version of Plex that can be used. Ex. 0.9.6.3 -->
-            <string></string>
+            <string>0.9.6.3</string>
         
         <key>PlexFrameworkFlags</key>
             <array>
