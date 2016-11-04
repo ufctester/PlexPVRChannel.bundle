@@ -171,6 +171,7 @@ class Session:
 
     # @handler(PREFIX, TITLE, art=ART, thumb=ICON)
     def SMainMenu(self, message=None, title1=TITLE, title2="Main Menu"):
+        Log.Info("================================= SMainMenu Creation =================================")
         oc = ObjectContainer(replace_parent=True, title1=title1, title2=title2, view_group="List")
 
         if isClient(MESSAGE_OVERLAY_CLIENTS):

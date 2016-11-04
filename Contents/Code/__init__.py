@@ -59,7 +59,8 @@ ART = 'art-default.jpg'
 ICON = 'plexrequestchannel.png'
 
 from Session import VERSION
-CHANGELOG_URL = "https://raw.githubusercontent.com/ngovil21/PlexRequestChannel.bundle/master/CHANGELOG"
+
+CHANGELOG_URL = "https://raw.githubusercontent.com/ufctester/PlexPVRChannel.bundle/master/CHANGELOG"
 
 ### URL Constants for TheMovieDataBase ############################################################
 TMDB_API_KEY = "096c49df1d0974ee573f0295acb9e3ce"
