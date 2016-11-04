@@ -47,7 +47,7 @@ from DumbTools import DumbKeyboard, MESSAGE_OVERLAY_CLIENTS
 import re
 
 TITLE = 'Plex Request Channel'
-PREFIX = '/video/plexrequestchannel'
+PREFIX = '/video/plexpvr'
 
 # The images below are the default graphic for your channel and should be saved or located in you Resources folder
 # The art and icon should be a certain size for channel submission. The graphics should be good quality and not be blurry
@@ -56,7 +56,7 @@ PREFIX = '/video/plexrequestchannel'
 # is not too busy or distracting.  I tested out a few in PMC to figure out which one looked best.
 
 ART = 'art-default.jpg'
-ICON = 'plexrequestchannel.png'
+ICON = 'plexpvr.png'
 
 from Session import VERSION
 
@@ -190,6 +190,7 @@ from Session import Session
 @route(PREFIX + '/main')
 
 def MainMenu():
+    Log.Info("=================== __init__::MainMenu ==================")
     sesh = Session(session_id=Hash.MD5(str(Datetime.Now())))
     return sesh.SMainMenu()
 
@@ -233,6 +234,4 @@ Xbox One            	Xbox One
 Xbox 360                Xbox 360
 Samsung                 Samsung
 
-
-Screenshots: http://imgur.com/a/cxKU9/all
 """

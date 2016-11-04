@@ -15,7 +15,6 @@
 #    v1.0.0 Initial Release
 #
 
-
 from DumbTools import DumbKeyboard, MESSAGE_OVERLAY_CLIENTS
 
 import re
@@ -25,14 +24,14 @@ import traceback
 from LocalePatch import L, F
 
 TITLE = 'Plex Request Channel'
-PREFIX = '/video/plexrequestchannel'
+PREFIX = '/video/plexpvr'
 
 ART = 'art-default.jpg'
-ICON = 'plexrequestchannel.png'
+ICON = 'plexpvr.png'
 
-VERSION = "0.8.0"
+VERSION = "1.0.0"
 BRANCH = "MASTER"
-CHANGELOG_URL = "https://raw.githubusercontent.com/ngovil21/PlexRequestChannel.bundle/master/CHANGELOG"
+CHANGELOG_URL = "https://raw.githubusercontent.com/ufctester/PlexPVRChannel.bundle/master/CHANGELOG"
 
 ### URL Constants for TheMovieDataBase ##################
 TMDB_API_KEY = "096c49df1d0974ee573f0295acb9e3ce"
@@ -92,6 +91,7 @@ LANGUAGE_ABBREVIATIONS = {
 
 class Session:
     def __init__(self, session_id):
+        Log.Info("=================== Session::__init__ ===================")
         self.locked = True
         try:
             HTTP.Request("127.0.0.1:32400/library")
@@ -171,7 +171,8 @@ class Session:
 
     # @handler(PREFIX, TITLE, art=ART, thumb=ICON)
     def SMainMenu(self, message=None, title1=TITLE, title2="Main Menu"):
-        Log.Info("================================= SMainMenu Creation =================================")
+        Log.Info("=================== Session::SMainMenu ==================")
+
         oc = ObjectContainer(replace_parent=True, title1=title1, title2=title2, view_group="List")
 
         if isClient(MESSAGE_OVERLAY_CLIENTS):
@@ -256,6 +257,8 @@ class Session:
         return oc
 
     def Register(self, message=None):
+        Log.Info("=================== Session::Register ===================")
+
         url = "https://plex.tv"
         try:
             xml = XML.ObjectFromURL(url, headers={'X-Plex-Token': self.token})
@@ -286,6 +289,7 @@ class Session:
         return oc
 
     def RegisterName(self, query=""):
+        Log.Info("================= Session::RegisterName =================")
         if not query:
             return self.Register(message=L("You must enter a name. Try again."))
         Dict['register'][self.token] = {'nickname': query, 'requests': 0}
@@ -294,10 +298,12 @@ class Session:
                               title2=L("Registered"))
 
     def SwitchKeyboard(self):
+        Log.Info("================= Session::SwitchKeyboard ===============")
         self.use_dumb_keyboard = not self.use_dumb_keyboard
         return self.SMainMenu("Keyboard has been changed")
 
     def AddNewMovie(self, title=None):
+        Log.Info("================== Session::AddNewMovie =================")
         if title is None:
             title = L("Request a Movie")
         Log.Debug("Client does support message overlays")
@@ -326,6 +332,7 @@ class Session:
         return oc
 
     def SearchMovie(self, query=""):
+        Log.Info("================== Session::SearchMovie =================")
         oc = ObjectContainer(title1=L("Search Results"), title2=query, content=ContainerContent.Shows,
                              view_group="Details")
         query = String.Quote(query, usePlus=True)
@@ -443,6 +450,7 @@ class Session:
         return oc
 
     def ConfirmMovieRequest(self, movie_id, title, source='', year="", poster="", backdrop="", summary=""):
+        Log.Info("============== Session::ConfirmMovieRequest =============")
         title_year = title + " (" + year + ")" if year else title
         if isClient(MESSAGE_OVERLAY_CLIENTS):
             oc = ObjectContainer(title1=L("Confirm Movie Request"), title2=title_year + "?", header=TITLE,
@@ -492,6 +500,7 @@ class Session:
         return oc
 
     def AddMovieRequest(self, movie_id, title, source='', year="", poster="", backdrop="", summary=""):
+        Log.Info("================ Session::AddMovieRequest ===============")
         if movie_id in Dict['movie']:
             Log.Debug("Movie is already requested")
             return self.SMainMenu(message=L("Movie has already been requested"), title1=title,
@@ -517,6 +526,7 @@ class Session:
 
     # TVShow Functions
     def AddNewTVShow(self, title=None):
+        Log.Info("================= Session::AddNewTVShow =================")
         if title is None:
             title = L("Request a TV Show")
         if Prefs['weekly_limit'] and int(Prefs['weekly_limit'] > 0) and not self.is_admin:
@@ -548,6 +558,7 @@ class Session:
         return oc
 
     def SearchTV(self, query):
+        Log.Info("=================== Session::SearchTV ===================")
         if Prefs['weekly_limit'] and int(Prefs['weekly_limit'] > 0) and not self.is_admin:
             if self.token in Dict['register'] and Dict['register'][self.token]['requests'] >= int(
                     Prefs['weekly_limit']):
@@ -642,6 +653,8 @@ class Session:
         return oc
 
     def ConfirmTVRequest(self, series_id, title, source="", year="", poster="", backdrop="", summary=""):
+        Log.Info("=============== Session::ConfirmTVRequest ===============")
+
         title_year = title + " " + "(" + year + ")" if year else title
 
         if isClient(MESSAGE_OVERLAY_CLIENTS):
@@ -696,6 +709,8 @@ class Session:
         return oc
 
     def AddTVRequest(self, series_id, title, source='', year="", poster="", backdrop="", summary=""):
+        Log.Info("================= Session::AddTVRequest =================")
+
         if series_id in Dict['tv']:
             Log.Debug("TV Show is already requested")
             return self.SMainMenu(message=L("TV Show has already been requested"), title1=title,
@@ -726,6 +741,7 @@ class Session:
             # TVShow Functions
 
     def AddNewMusic(self, title=None):
+        Log.Info("================== Session::AddNewMusic =================")
         if title is None:
             title = L("Request Music")
         if Prefs['weekly_limit'] and int(Prefs['weekly_limit'] > 0) and not self.is_admin:
@@ -774,6 +790,7 @@ class Session:
         return oc
 
     def NewMusicSearch(self, searchtype, searchstr):
+        Log.Info("================ Session::NewMusicSearch ================")
         if Prefs['weekly_limit'] and int(Prefs['weekly_limit'] > 0) and not self.is_admin:
             if self.token in Dict['register'] and Dict['register'][self.token]['requests'] >= int(
                     Prefs['weekly_limit']):
@@ -803,6 +820,7 @@ class Session:
         return oc
 
     def SearchMusic(self, query, searchtype="release", searchstr="Album"):
+        Log.Info("================== Session::SearchMusic =================")
         if Prefs['weekly_limit'] and int(Prefs['weekly_limit'] > 0) and not self.is_admin:
             if self.token in Dict['register'] and Dict['register'][self.token]['requests'] >= int(
                     Prefs['weekly_limit']):
@@ -872,6 +890,7 @@ class Session:
         return oc
 
     def ConfirmMusicRequest(self, searchtype, music_id, music_name, music_date=None, music_image=None):
+        Log.Info("============= Session::ConfirmMusicRequest ==============")
         if isClient(MESSAGE_OVERLAY_CLIENTS):
             oc = ObjectContainer(title1="Confirm Music Request", title2=F("confirmmusicrequest", music_name),
                                  header=TITLE, message=F("requestmusic", music_name))
@@ -886,6 +905,7 @@ class Session:
         return oc
 
     def AddMusicRequest(self, searchtype, music_id, music_name, music_date=None, music_image=None):
+        Log.Info("================ Session::AddMusicRequest ===============")
         title = music_name
         if music_date:
             title += " (" + music_date + ")"
@@ -909,6 +929,7 @@ class Session:
 
     # Request Functions
     def ViewRequests(self, query="", token_hash=None, message=None):
+        Log.Info("================= Session::ViewRequests =================")
         oc = ObjectContainer(title2=message)
         if not self.locked:
             if isClient(MESSAGE_OVERLAY_CLIENTS):
@@ -933,6 +954,7 @@ class Session:
         return oc
 
     def ViewRequestsPassword(self):
+        Log.Info("============= Session::ViewRequestsPassword =============")
         oc = ObjectContainer(header=TITLE, message=L("Please enter the password in the searchbox"))
         if self.use_dumb_keyboard:
             Log.Debug("Client does not support Input. Using DumbKeyboard")
@@ -984,6 +1006,7 @@ class Session:
             return oc
 
     def ViewTVRequests(self, token_hash=None):
+        Log.Info("================ Session::ViewTVRequests ================")
         oc = ObjectContainer()
         if not Dict['movie']:
             Log.Debug("There are no tv requests")
@@ -1021,6 +1044,7 @@ class Session:
             return oc
 
     def ViewMusicRequests(self, token_hash=None):
+        Log.Info("=============== Session::ViewMusicRequests ==============")
         oc = ObjectContainer()
         if not Dict['movie']:
             Log.Debug("There are no music requests")
@@ -1057,6 +1081,7 @@ class Session:
             return oc
 
     def ConfirmDeleteRequests(self, type):
+        Log.Info("============= Session::ConfirmDeleteRequests ============")
         oc = ObjectContainer(title2=L("Are you sure you would like to clear all requests?"))
         if Client.Platform in TV_SHOW_OBJECT_FIX_CLIENTS:  # If on android, add an empty first item because it gets truncated for some reason
             oc.add(DirectoryObject(key=None, title=""))
@@ -1065,6 +1090,7 @@ class Session:
         return oc
 
     def ClearRequests(self, type):
+        Log.Info("================ Session::ClearRequests =================")
         if not self.is_admin:
             return self.SMainMenu(L("Only an admin can manage the channel!"), title1=L("Main Menu"),
                                   title2=L("Admin only"))
@@ -1073,6 +1099,7 @@ class Session:
         return self.ViewRequests(message=L("All " + type + " have been cleared"))
 
     def ViewRequest(self, req_id, req_type, token_hash=None):
+        Log.Info("================= Session::ViewRequest ==================")
         key = Dict[req_type][req_id]
         title_year = key['title']
         title_year += " (" + key.get("year") + ")" if not re.search(" \(/d/d/d/d\)", key['title']) and key['year'] else \
@@ -1128,6 +1155,7 @@ class Session:
         return oc
 
     def ConfirmDeleteRequest(self, req_id, req_type, title_year="", token_hash=None):
+        Log.Info("============= Session::ConfirmDeleteRequest =============")
         oc = ObjectContainer(title2=F("confirmdelete", title_year))
         if Client.Platform in TV_SHOW_OBJECT_FIX_CLIENTS:  # If an android, add an empty first item because it gets truncated for some reason
             oc.add(DirectoryObject(key=None, title=""))
@@ -1141,6 +1169,7 @@ class Session:
         return oc
 
     def DeleteRequest(self, req_id, req_type, token_hash=None):
+        Log.Info("================ Session::DeleteRequest =================")
         if req_id in Dict[req_type]:
             message = L("Request was deleted")
             del Dict[req_type][req_id]
@@ -1151,6 +1180,7 @@ class Session:
 
     # CouchPotato Functions
     def SendToCouchpotato(self, movie_id):
+        Log.Info("============== Session::SendToCouchpotato ===============")
         if movie_id not in Dict['movie']:
             return MessageContainer(L("Error"), L("The movie id was not found in the database"))
         movie = Dict['movie'][movie_id]
@@ -1228,6 +1258,7 @@ class Session:
         return oc
 
     def ManageCouchpotato(self):
+        Log.Info("============== Session::ManageCouchpotato ===============")
         if not Prefs['couchpotato_url'].startswith("http"):
             couchpotato_url = "http://" + Prefs['couchpotato_url']
         else:
@@ -1266,6 +1297,7 @@ class Session:
         return oc
 
     def ManageCouchPotatoMovie(self, movie_id, title=""):
+        Log.Info("============ Session::ManageCouchPotatoMovie ============")
         oc = ObjectContainer(title1=L("Manage Couchpotato"), title2=title)
         oc.add(
             DirectoryObject(key=Callback(self.DeleteCouchPotatoMovie, movie_id=movie_id),
@@ -1276,6 +1308,7 @@ class Session:
         return oc
 
     def DeleteCouchPotatoMovie(self, movie_id):
+        Log.Info("============ Session::DeleteCouchPotatoMovie ============")
         if not Prefs['couchpotato_url'].startswith("http"):
             couchpotato_url = "http://" + Prefs['couchpotato_url']
         else:
@@ -1298,6 +1331,7 @@ class Session:
 
     # Sonarr Methods
     def SendToSonarr(self, tvdbid, callback=None):
+        Log.Info("================= Session::SendToSonarr =================")
         if not Prefs['sonarr_url'].startswith("http"):
             sonarr_url = "http://" + Prefs['sonarr_url']
         else:
@@ -1403,10 +1437,11 @@ class Session:
             oc.add(DirectoryObject(key=Callback(self.ViewTVRequests), title=L("Return to TV Requests"),
                                    thumb=R('return.png')))
             oc.add(DirectoryObject(key=Callback(self.SMainMenu), title=L("Return to Main Menu"),
-                                   thumb=R('plexrequestchannel.png')))
+                                   thumb=R('plexpvr.png')))
         return oc
 
     def ManageSonarr(self):
+        Log.Info("================= Session::ManageSonarr =================")
         oc = ObjectContainer(title1=TITLE, title2="Manage Sonarr")
         if not Prefs['sonarr_url'].startswith("http"):
             sonarr_url = "http://" + Prefs['sonarr_url']
@@ -1440,6 +1475,7 @@ class Session:
         return oc
 
     def ManageSonarrShow(self, series_id, title="", callback=None, message=None):
+        Log.Info("=============== Session::ManageSonarrShow ===============")
         if not Prefs['sonarr_url'].startswith("http"):
             sonarr_url = "http://" + Prefs['sonarr_url']
         else:
@@ -1478,6 +1514,7 @@ class Session:
         return oc
 
     def ManageSonarrSeason(self, series_id, season, message=None, callback=None):
+        Log.Info("============== Session::ManageSonarrSeason ==============")
         if not Prefs['sonarr_url'].startswith("http"):
             sonarr_url = "http://" + Prefs['sonarr_url']
         else:
@@ -1518,6 +1555,7 @@ class Session:
         return oc
 
     def SonarrMonitorShow(self, series_id, seasons, episodes='all', callback=None):
+        Log.Info("============== Session::SonarrMonitorShow ===============")
         if not Prefs['sonarr_url'].startswith("http"):
             sonarr_url = "http://" + Prefs['sonarr_url']
         else:
@@ -1591,6 +1629,7 @@ class Session:
                 # return self.MainMenu()
 
     def SonarrShowExists(self, tvdbid):
+        Log.Info("=============== Session::SonarrShowExists ===============")
         if not Prefs['sonarr_url'].startswith("http"):
             sonarr_url = "http://" + Prefs['sonarr_url']
         else:
@@ -1608,6 +1647,7 @@ class Session:
 
     # Sickbeard Functions
     def SendToSickbeard(self, tvdbid, callback=None):
+        Log.Info("=============== Session::SendToSickbeard ================")
         if not Prefs['sickbeard_url'].startswith("http"):
             sickbeard_url = "http://" + Prefs['sickbeard_url']
         else:
@@ -1680,6 +1720,7 @@ class Session:
         return oc
 
     def ManageSickbeard(self):
+        Log.Info("=============== Session::ManageSickbeard ================")
         oc = ObjectContainer(title1=TITLE, title2="Manage " + Prefs['sickbeard_fork'])
         if not Prefs['sickbeard_url'].startswith("http"):
             sickbeard_url = "http://" + Prefs['sickbeard_url']
@@ -1712,6 +1753,7 @@ class Session:
         return oc
 
     def ManageSickbeardShow(self, series_id, title="", callback=None, message=None):
+        Log.Info("============== Session::ManageSickbeardShow =============")
         if not Prefs['sickbeard_url'].startswith("http"):
             sickbeard_url = "http://" + Prefs['sickbeard_url']
         else:
@@ -1760,6 +1802,7 @@ class Session:
         return oc
 
     def ManageSickbeardSeason(self, series_id, season, message=None, callback=None):
+        Log.Info("============= Session::ManageSickbeardSeason ============")
         if not Prefs['sickbeard_url'].startswith("http"):
             sickbeard_url = "http://" + Prefs['sickbeard_url']
         else:
@@ -1808,6 +1851,7 @@ class Session:
         return oc
 
     def SickbeardMonitorShow(self, series_id, seasons, episodes='all', callback=None):
+        Log.Info("============= Session::SickbeardMonitorShow =============")
         if not Prefs['sickbeard_url'].startswith("http"):
             sickbeard_url = "http://" + Prefs['sickbeard_url']
         else:
@@ -1871,6 +1915,7 @@ class Session:
                 # return self.MainMenu()
 
     def SickbeardShowExists(self, tvdbid):
+        Log.Info("============= Session::SickbeardShowExists ==============")
         if not Prefs['sickbeard_url'].startswith("http"):
             sickbeard_url = "http://" + Prefs['sickbeard_url']
         else:
@@ -1894,6 +1939,7 @@ class Session:
         return False
 
     def SendToHeadphones(self, music_id):
+        Log.Info("=============== Session::SendToHeadphones ===============")
         if not Prefs['headphones_url'].startswith("http"):
             headphones_url = "http://" + Prefs['headphones_url']
         else:
@@ -1932,6 +1978,7 @@ class Session:
 
     # ManageChannel Functions
     def ManageChannel(self, message=None, title1=TITLE, title2="Manage Channel"):
+        Log.Info("================= Session::ManageChannel ================")
         if not self.is_admin:
             return self.SMainMenu(L("Only an admin can manage the channel!"), title1=L("Main Menu"),
                                   title2=L("Admin only"))
@@ -1948,6 +1995,7 @@ class Session:
         return oc
 
     def ManageUsers(self, message=None):
+        Log.Info("================= Session::ManageUsers ==================")
         if not self.is_admin:
             return self.SMainMenu(L("Only an admin can manage the channel!"), title1=L("Main Menu"),
                                   title2=L("Admin only"))
@@ -1965,6 +2013,7 @@ class Session:
         return oc
 
     def ManageUser(self, toke, message=None):
+        Log.Info("================== Session::ManageUser ==================")
         if not self.is_admin:
             return self.SMainMenu(L("Only an admin can manage the channel!"), title1=L("Main Menu"),
                                   title2=L("Admin only"))
@@ -1998,6 +2047,7 @@ class Session:
         return oc
 
     def RenameUser(self, toke, message=""):
+        Log.Info("================== Session::RenameUser ==================")
         if not self.is_admin:
             return self.SMainMenu(L("Only an admin can manage the channel!"), title1=L("Main Menu"),
                                   title2=L("Admin only"))
@@ -2021,6 +2071,7 @@ class Session:
         return oc
 
     def RegisterUserName(self, query="", toke=""):
+        Log.Info("=============== Session::RegisterUserName ===============")
         if not self.is_admin:
             return self.SMainMenu(L("Only an admin can manage the channel!"), title1=L("Main Menu"),
                                   title2=L("Admin only"))
@@ -2031,6 +2082,7 @@ class Session:
         return self.ManageUser(toke=toke, message=L("Username has been set"))
 
     def BlockUser(self, toke, setter):
+        Log.Info("================== Session::BlockUser ===================")
         if setter == 'True':
             if toke in Dict['blocked']:
                 return self.ManageUser(toke=toke, message=L("User is already blocked."))
@@ -2046,6 +2098,7 @@ class Session:
         return self.ManageUser(toke=toke)
 
     def SonarrUser(self, toke, setter):
+        Log.Info("================== Session::SonarrUser ==================")
         tv_auto = ""
         if Prefs['sonarr_api']:
             tv_auto = "Sonarr"
@@ -2066,6 +2119,7 @@ class Session:
         return self.ManageUser(toke=toke)
 
     def DeleteUser(self, toke, confirmed='False'):
+        Log.Info("================== Session::DeleteUser ==================")
         if not self.is_admin:
             return self.SMainMenu("Only an admin can manage the channel!", title1="Main Menu", title2="Admin only")
         oc = ObjectContainer(title1=L("Confirm Delete User?"), title2=Dict['register'][toke]['nickname'])
@@ -2079,6 +2133,7 @@ class Session:
         return oc
 
     def ResetDict(self, confirm='False'):
+        Log.Info("================== Session::ResetDict ===================")
         if not self.is_admin:
             return self.SMainMenu("Only an admin can manage the channel!", title1="Main Menu", title2="Admin only")
         if confirm == 'False':
@@ -2106,23 +2161,25 @@ class Session:
         return MessageContainer(header=TITLE, message="Unknown response")
 
     def Changelog(self):
+        Log.Info("================== Session::Changelog ===================")
         oc = ObjectContainer(title1=TITLE, title2=L("Changelog"))
         clog = HTTP.Request(CHANGELOG_URL)
         changes = clog.content
         changes = changes.splitlines()
         oc.add(DirectoryObject(key=Callback(self.Changelog), title="Current Version: " + str(VERSION),
-                               thumb=R('plexrequestchannel.png')))
+                               thumb=R('plexpvr.png')))
         for change in changes[:10]:
             csplit = change.split("-")
             title = csplit[0].strip() + " - v" + csplit[1].strip()
             oc.add(DirectoryObject(key=Callback(self.ShowMessage, header=title, message=change), title=title,
                                    summary=csplit[2].strip(),
-                                   thumb=R('plexrequestchannel.png')))
+                                   thumb=R('plexpvr.png')))
         oc.add(DirectoryObject(key=Callback(self.ManageChannel), title=L("Return to Manage Channel"),
                                thumb=R('return.png')))
         return oc
 
     def ToggleDebug(self):
+        Log.Info("================= Session::ToggleDebug ==================")
         if Dict['debug']:
             Dict['debug'] = False
         else:
@@ -2131,9 +2188,11 @@ class Session:
         return self.ManageChannel(message="Debug is " + ("on" if Dict['debug'] else "off"))
 
     def ShowMessage(self, header, message):
+        Log.Info("================= Session::ShowMessage ==================")
         return MessageContainer(header=header, message=message)
 
     def ReportProblem(self):
+        Log.Info("================= Session::ReportProblem ================")
         oc = ObjectContainer(title1=TITLE, title2=L("Report a Problem"))
         oc.add(DirectoryObject(key=Callback(self.NavigateMedia), title=L("Report Problem with Media")))
         if self.use_dumb_keyboard:  # Clients in this list do not support InputDirectoryObjects
@@ -2154,6 +2213,7 @@ class Session:
         return oc
 
     def NavigateMedia(self, path=None):
+        Log.Info("================ Session::NavigateMedia =================")
         if not path:
             path = "/library/sections"
             parent = None
@@ -2218,6 +2278,7 @@ class Session:
         return oc
 
     def ReportProblemMedia(self, rating_key, title):
+        Log.Info("============== Session::ReportProblemMedia ==============")
         oc = ObjectContainer(title1="What is the problem?", title2=title)
         page = XML.ElementFromURL("http://127.0.0.1:32400/library/metadata/" + rating_key)
         container = page.xpath("/MediaContainer")[0]
@@ -2265,6 +2326,7 @@ class Session:
         return oc
 
     def ReportProblemMediaOther(self, query="", report=""):
+        Log.Info("============ Session::ReportProblemMediaOther ===========")
         if not query:
             oc = ObjectContainer(title2=L("Report Problem with Media"))
             if Client.Product == "Plex Web":
@@ -2277,6 +2339,7 @@ class Session:
         return self.ConfirmReportProblem(query=report + " - " + query, type='media')
 
     def ReportGeneralProblem(self):
+        Log.Info("============= Session::ReportGeneralProblem =============")
         if isClient(MESSAGE_OVERLAY_CLIENTS):
             oc = ObjectContainer(header=TITLE, message=L("Enter your problem in the search box."))
         else:
@@ -2297,6 +2360,7 @@ class Session:
         return oc
 
     def ConfirmReportProblem(self, query="", type='general'):
+        Log.Info("============= Session::ConfirmReportProblem =============")
         if type == 'general':
             query = "Issue: " + query
         oc = ObjectContainer(title1=L("Confirm"), title2=query)
@@ -2305,6 +2369,7 @@ class Session:
         return oc
 
     def NotifyProblem(self, problem):
+        Log.Info("================ Session::NotifyProblem =================")
         title = "Plex Request Channel - Problem Reported"
         user = "A user"
         if self.token in Dict['register'] and Dict['register'][self.token]['nickname']:
@@ -2316,6 +2381,7 @@ class Session:
 
 
 def checkAdmin(toke):
+    Log.Info("================== Session::checkAdmin ==================")
     # import urllib2
     try:
         url = "https://plex.tv/users/account" if Prefs['plextv'] else "http://127.0.0.1:32400/myplex/account"
@@ -2331,6 +2397,8 @@ def checkAdmin(toke):
 
 
 def resetRegister():
+    Log.Info("================ Session::resetRegister =================")
+
     for key in Dict['register']:
         Dict['register'][key]['requests'] = 0
     Dict['register_reset'] = Datetime.TimestampFromDatetime(Datetime.Now())
@@ -2341,6 +2409,8 @@ def resetRegister():
 
 # Notify user of requests
 def notifyRequest(req_id, req_type, title="", message=""):
+    Log.Info("================ Session::notifyRequest =================")
+
     if Prefs['pushbullet_api']:
         try:
             if req_type == 'movie':
@@ -2492,6 +2562,8 @@ def notifyRequest(req_id, req_type, title="", message=""):
 
 
 def Notify(title, body, devices=None):
+    Log.Info("==================== Session::Notify ====================")
+
     if Prefs['email_to']:
         try:
             if not sendEmail(title, body, 'html'):
@@ -2520,6 +2592,8 @@ def Notify(title, body, devices=None):
 
 
 def sendPushBullet(title, body, device_iden=""):
+    Log.Info("================ Session::sendPushBullet ================")
+
     api_header = {'Authorization': 'Bearer ' + Prefs['pushbullet_api'],
                   'Content-Type': 'application/json'
                   }
@@ -2533,11 +2607,15 @@ def sendPushBullet(title, body, device_iden=""):
 
 
 def sendPushover(title, message):
+    Log.Info("================= Session::sendPushover =================")
+
     data = {'token': Prefs['pushover_api'], 'user': Prefs['pushover_user'], 'title': title, 'message': message}
     return HTTP.Request(PUSHOVER_API_URL, values=data)
 
 
 def sendPushalot(title, message):
+    Log.Info("================= Session::sendPushalot =================")
+
     data = {'AuthorizationToken': Prefs['pushalot_api'], 'Title': title, 'Body': message, 'IsImportant': 'false',
             'IsSilent': 'false'}
     return HTTP.Request(PUSHALOT_API_URL, values=data)
@@ -2545,6 +2623,8 @@ def sendPushalot(title, message):
 
 # noinspection PyUnresolvedReferences
 def sendEmail(subject, body, email_type='html'):
+    Log.Info("================== Session::sendEmail ===================")
+
     from email.MIMEText import MIMEText
     from email.MIMEMultipart import MIMEMultipart
     from email.Utils import formatdate
@@ -2570,10 +2650,14 @@ def sendEmail(subject, body, email_type='html'):
 
 
 def isClient(obj_list):
+    Log.Info("=================== Session::isClient ===================")
+
     return Client.Platform in obj_list or Client.Product in obj_list
 
 
 def userFromToken(token):
+    Log.Info("================= Session::userFromToken ================")
+
     if token in Dict['register']:
         if Dict['register'][token]['nickname']:
             return Dict['register'][token]['nickname']

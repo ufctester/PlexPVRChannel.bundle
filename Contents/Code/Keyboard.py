@@ -1,10 +1,25 @@
-#Modified version of DumbTools for Plex v1.1 by Cory <babylonstudio@gmail.com>
+#
+#
+#
+# MOST IMPORTANT NOTE: BEFORE WRITING A CHANNEL, THERE MUST ALREADY BE A URL SERVICE FOR THE VIDEOS ON THE WEBSITE
+# YOU WANT TO CREATE A CHANNEL FOR OR YOU WILL HAVE TO WRITE A URL SERVICE BEFORE YOU CAN WRITE THE CHANNEL. TO
+# SEE IF A URL SERVICE ALREADY EXISTS, CHECK THE SERVICES BUNDLE IN THE PLEX PLUGIN FOLDER
+#
+# IMPORTANT NOTE: PYTHON IS VERY SENSITIVE TO PROPER INDENTIONS.  IF YOUR CHANNEL HAS IMPROPER INDENTIONS IT WILL
+# NOT BE RECOGNIZED BY PLEX. I RUN THE PROGRAM THROUGH A CHECK MODULE ON A LOCAL VERSION OF PYTHON I HAVE LOADED
+# PRIOR TO ACCESSING IT THROUGH PLEX TO MAKE SURE THERE ARE NO INDENTION ERRORS.
+#
+# Keyboard.py by Dave Spriet <davespriet@gmail.com>
+# 
+# Change History
+#    v1.0.0 Modified version of DumbTools for Plex v1.1 
+#
 
 KEYS = list('abcdefghijklmnopqrstuvwxyz1234567890-=;[]\\\',./')
 SHIFT_KEYS = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+:{}|\"<>?')
 
 TITLE = 'Plex Request Channel'
-PREFIX = '/video/plexrequestchannel'
+PREFIX = '/video/plexpvr'
 
 
 DUMB_KEYBOARD_CLIENTS = ['Plex for iOS', 'Plex Media Player', 'Plex Home Theater', 'OpenPHT', 'Plex for Roku', 'iOS', 'Roku', 'tvOS' 'Konvergo',
