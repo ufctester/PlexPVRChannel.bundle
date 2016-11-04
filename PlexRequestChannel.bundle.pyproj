@@ -35,7 +35,7 @@
     <Content Include="Contents\Resources\headphones.png" />
     <Content Include="Contents\Resources\icon-default.png" />
     <Content Include="Contents\Resources\no-poster.jpg" />
-    <Content Include="Contents\Resources\plexrequestchannel.png" />
+    <Content Include="Contents\Resources\plexpvr.png" />
     <Content Include="Contents\Resources\return.png" />
     <Content Include="Contents\Resources\search.png" />
     <Content Include="Contents\Resources\sickbeard.png" />
